@@ -6,8 +6,8 @@
 #include <string.h>
 
 int main() {
-    char num1[100];
-    char num2[100];
+    char num1[101];
+    char num2[101];
     char *re = NULL;
 
     scanf("%s %s", num1, num2);
@@ -39,11 +39,8 @@ int main() {
         }
         //偶数位的处理
         else {
-            int t = (num2[--len2] - '0') - (num1[--len1] - '0');
-            if (t < 10) {
-                t += 10;
-                t = t % 10;
-            }
+            int t = num2[--len2] - num1[--len1];
+            if (t < 0)  t += 10;
             re[max - i] = '0' + t;
         }
         i++;
