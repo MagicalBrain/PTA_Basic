@@ -45,6 +45,16 @@ int main() {
         }
         i++;
     }
+    while (i <= max) {
+        if (re == num1 && i % 2 == 0) {
+            int t = re[max - i] - '0';
+            if (t == 0)
+                re[max - i] = '0';
+            else
+            re[max - i] = '0' + 10 - t;
+        }
+        i++;
+    }
     puts(re);
     return 0;
 }
