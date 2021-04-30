@@ -8,7 +8,7 @@
 int main() {
     int num;
     double *data;
-    double sum = 0.0;
+    long long sum = 0;
     scanf("%d", &num);
 
     data = (double*) malloc(num * sizeof(double));
@@ -20,13 +20,13 @@ int main() {
     
     for (int i = 0; i < num; i++)
     {
-        int t = (num - i) * (i + 1);
-        sum += t * data[i];
+        long long t = (num - i) * (i + 1) * (long long)(data[i] * 1000);
+        sum += t;
         
     }
     
     
-    printf("%.2lf\n", sum);
+    printf("%.2lf\n", sum / 1000.0);
     free(data);
     return 0;
 }
