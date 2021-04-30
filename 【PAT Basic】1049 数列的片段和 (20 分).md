@@ -36,13 +36,42 @@
 ## 代码实现
 
 ```cpp
+/*
+* 1049题 代码存档
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+int main() {
+    int num;
+    double *data;
+    long long sum = 0;
+    scanf("%d", &num);
+
+    data = (double*) malloc(num * sizeof(double));
+    for (int i = 0; i < num; i++)
+        scanf("%lf", &data[i]);
+    
+    for (int i = 0; i < num; i++)
+    {
+        long long t = (long long)(num - i) * (i + 1) * (data[i] * 1000);
+        sum += t;
+        
+    }
+    
+    printf("%.2f\n", sum / 1000.0);
+    return 0;
+}
 ```
 
 ## 总结
 
 这题让我加深了对double类型的理解，原来double是由误差的，而且累加的次数越多误差越大。
 那为何我们以前搞测绘全都是用double来计算，可能是没有人注意到这个问题，或者注意到干脆就不管了，因为测量误差本来就存在不差这一点？
+
+注意：
+由于需要将double强制转换成long long，小心类型强制转换的语法错误。
 
 这题的测试数据量可能会比较庞大，是时候自己写个测试的demo了。
 先用python写，然后再用C++。

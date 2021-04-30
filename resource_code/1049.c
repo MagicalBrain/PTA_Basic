@@ -13,20 +13,15 @@ int main() {
 
     data = (double*) malloc(num * sizeof(double));
     for (int i = 0; i < num; i++)
-    {
         scanf("%lf", &data[i]);
-        //sum += data[i];
-    }
     
     for (int i = 0; i < num; i++)
     {
-        long long t = (num - i) * (i + 1) * (long long)(data[i] * 1000);
+        long long t = (long long)(num - i) * (i + 1) * (data[i] * 1000);
         sum += t;
         
     }
     
-    
-    printf("%.2lf\n", sum / 1000.0);
-    free(data);
+    printf("%.2f\n", sum / 1000.0);
     return 0;
 }
