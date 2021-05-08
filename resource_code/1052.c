@@ -6,7 +6,8 @@
 #include <string.h>
 
 int find(char *set, int id, char *re) {
-    //re = (char*) malloc(10 * sizeof(char));
+    if (id <= 0)
+        return 0;
     int i = 0, cnt = 0;
     while (set[i] != '\0')
     {
@@ -25,7 +26,6 @@ int find(char *set, int id, char *re) {
         i++, j++; 
     }
     re[j] = '\0';
-    //i += 1;
     
     return 1;
 }
@@ -60,52 +60,32 @@ int main() {
             scanf("%d", &id[j]);
         }   
         
-        /*
-        find(hand, id[0], symbol1); 
-        find(hand, id[1], symbol2); 
-        find(hand, id[2], symbol3); 
-        find(hand, id[3], symbol4); 
-        find(hand, id[4], symbol5); 
-        */
-
-        //if (symbol1 == NULL)
         if (find(hand, id[0], symbol1) == 0)
         {  
             printf("Are you kidding me? @\\/@\n");
-            //free(symbol1);
             continue;
         }
-        //if (symbol2 == NULL)
         if (find(eye, id[1], symbol2) == 0)
         {  
             printf("Are you kidding me? @\\/@\n");
-            //free(symbol2);
             continue;
         }
-        //if (symbol3 == NULL)
         if (find(mouth, id[2], symbol3) == 0)
         {  
             printf("Are you kidding me? @\\/@\n");
-            //free(symbol3);
             continue;
         }
-        //if (symbol4 == NULL)
         if (find(eye, id[3], symbol4) == 0)
         {  
             printf("Are you kidding me? @\\/@\n");
-            //free(symbol4);
             continue;
         }
-        //if (symbol5 == NULL)
-        else if (find(hand, id[4], symbol5) == 0)
+        if (find(hand, id[4], symbol5) == 0)
         {  
             printf("Are you kidding me? @\\/@\n");
-            //free(symbol5);
             continue;
         }
         printf("%s(%s%s%s)%s\n", symbol1, symbol2, symbol3, symbol4, symbol5);
-        
-            
     }
     
     free(symbol1);
