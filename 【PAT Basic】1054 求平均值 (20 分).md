@@ -49,8 +49,173 @@ The average of 0 numbers is Undefined
 
 ## 代码
 
-```cpp
+### 测试用例
 
+```
+10
+0 0.0 0.000 1000 -1000 1.123 1.12 1.2.3 a& 1.000
+```
+
+```
+10
+. 0.0 0.000 1000 -1000 1.123 1.12 1.2.3 a& 1.000
+```
+
+### 自己的代码
+
+#### 不使用库函数，手动编码判断逻辑
+
+```cpp
+/*
+* 1054题 代码存档
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void Islegal(char *in, float *num) {
+    int i = 0;
+    int dot_cnt = 0;
+    int dot_loc = 0;
+    int inlegal = 0;
+    
+    //判断非法字符
+    while (in[i] != '\0')
+    {
+        if (dot_cnt > 1) {
+            inlegal = 1;
+            break;
+        }
+        if (in[i] == '-' && i == 0) {
+            i++;
+            continue;
+        }
+        else if (in[i] == '.') {
+            dot_cnt++;
+            dot_loc = i;
+            if (i == 0) {
+                inlegal = 1;
+                break;
+            }
+        }
+        else if (in[i] < '0' || in[i] > '9') {
+            inlegal = 1;
+            break;
+        }
+        i++;
+    }
+
+    //判断数值范围
+    float re = (float)atof(in);
+    if (re < -1000 || re > 1000)
+        inlegal = 1;
+    
+    //判断小数点后面不超过2位
+    if (dot_loc > 0 && i - dot_loc > 3)
+        inlegal = 1;
+    if (inlegal == 1) {
+        printf("ERROR: %s is not a legal number\n", in);
+    }
+    else *num = re;
+}
+
+int main() {
+    int K, K_cp;
+    char input[50];
+    float sum = 0.0;
+    float *ouput = (float*) malloc(sizeof(float));
+    
+
+    scanf("%d", &K);
+
+    K_cp = K;
+    for (int i = 0; i < K_cp; i++)
+    {
+        *ouput = -1001;
+        scanf("%s", input);
+        Islegal(input, ouput);
+        if (-1001 != *ouput)   sum += *ouput;
+        else K--;
+        //printf("%f\n", *ouput);
+    }
+    if (K == 0)
+        printf("The average of 0 numbers is Undefined");
+    else if (K == 1) 
+        printf("The average of 1 number is %.2f\n", sum);
+    else {
+        sum /= (float)K;
+        printf("The average of %d numbers is %.2f\n", K, sum);
+    }
+    free(ouput);
+    return 0;
+}
+```
+
+#### 使用库函数
+
+使用了```sscanf```函数和```sprintf```函数
+
+```cpp
+/*
+* 1054题 代码存档
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void Islegal(char *in, float *num) {
+    double temp;
+    char t[50];
+    int inlegal = 0;
+
+    sscanf(in, "%lf", &temp);
+    sprintf(t, "%.2f", temp);
+    //比较原始输入in字符串和格式化结果t字符串
+    for (int i = 0; in[i] != '\0'; i++)
+    {
+        if (in[i] != t[i]) {
+            inlegal = 1;
+            break;
+        }
+    }
+    
+    if (temp < -1000 || temp > 1000)    inlegal = 1;
+    if (inlegal == 1) {
+        printf("ERROR: %s is not a legal number\n", in);
+    }
+    else *num = (float)temp;
+}
+
+int main() {
+    int K, K_cp;
+    char input[50];
+    float sum = 0.0;
+    float *ouput = (float*) malloc(sizeof(float));
+    
+
+    scanf("%d", &K);
+
+    K_cp = K;
+    for (int i = 0; i < K_cp; i++)
+    {
+        *ouput = -1001;
+        scanf("%s", input);
+        Islegal(input, ouput);
+        if (-1001 != *ouput)   sum += *ouput;
+        else K--;
+        //printf("%f\n", *ouput);
+    }
+    if (K == 0)
+        printf("The average of 0 numbers is Undefined");
+    else if (K == 1) 
+        printf("The average of 1 number is %.2f\n", sum);
+    else {
+        sum /= (float)K;
+        printf("The average of %d numbers is %.2f\n", K, sum);
+    }
+    free(ouput);
+    return 0;
+}
 ```
 
 ### 柳婼的代码

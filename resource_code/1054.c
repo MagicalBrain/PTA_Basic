@@ -6,41 +6,26 @@
 #include <string.h>
 
 void Islegal(char *in, float *num) {
-    int i = 0;
-    int dot_cnt = 0;
+    double temp;
+    char t[50];
     int inlegal = 0;
-    
-    while (in[i] != '\0')
-    {
-        if (dot_cnt > 1) {
-            inlegal = 1;
-            break;
-        }
-        if (in[i] == '-' && i == 0) {
-            i++;
-            continue;
-        }
-        else if (in[i] == '.') dot_cnt++;
-        else if (in[i] < '0' || in[i] > '9') {
-            inlegal = 1;
-            break;
-        }
-        i++;
-    }
 
-    float re = (float)atof(in);
-    if (re < -1000 || re >1000)
-        inlegal = 1;
+    sscanf(in, "%lf", &temp);
+    sprintf(t, "%.2f", temp);
+    //比较原始输入in字符串和格式化结果t字符串
+    for (int i = 0; in[i] != '\0'; i++)
+    {
+        if (in[i] != t[i]) {
+            inlegal = 1;
+            break;
+        }
+    }
     
-    float tmp = (float)atof(in);
-    tmp *= 1000;
-    //printf("tmp = %f\n", tmp);
-    if ((int)tmp % 10 != 0)
-        inlegal = 1;
+    if (temp < -1000 || temp > 1000)    inlegal = 1;
     if (inlegal == 1) {
         printf("ERROR: %s is not a legal number\n", in);
     }
-    else *num = re;
+    else *num = (float)temp;
 }
 
 int main() {
@@ -64,6 +49,8 @@ int main() {
     }
     if (K == 0)
         printf("The average of 0 numbers is Undefined");
+    else if (K == 1) 
+        printf("The average of 1 number is %.2f\n", sum);
     else {
         sum /= (float)K;
         printf("The average of %d numbers is %.2f\n", K, sum);
