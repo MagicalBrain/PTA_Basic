@@ -46,10 +46,113 @@ Tim Amy John
 
 ## 基本思路
 
-注意审题，我是摄影师，左右与拍照的人相反。
+**分析：**
+注意审题，我是摄影师，左右与拍照的人相反。即第一行输出高个子，后面几行输出矮个子，而且每排从中间最高的开始，先左后右。
 
-先按身高排序，然后计算好要排多少排。
+当身高相同时，按名字的字典序来排序
+
+---
+**思路：**
+先用快排按身高排序（注意在比较函数cmp里加入身高相同时按名字字典序排序的逻辑），然后计算好要排多少排。
 
 ## 代码
 
+```cpp
+/*
+* 1055题 代码存档
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct man
+{
+    char name[10];
+    int tall;
+    int id;
+}man;
+
+int cmp(const void *A, const void *B) {
+    man a = *(man*) A;
+    man b = *(man*) B;
+    //若身高相同，则按名字的字典序排序
+    if (b.tall == a.tall) {
+        return strcmp(a.name,b.name);
+    }
+    return b.tall - a.tall;
+}
+
+int main() {
+    int N, K;
+    scanf("%d%d", &N, &K);
+    
+    man *data = (man*) malloc(N * sizeof(man));
+    for (int i = 0; i < N; i++)
+    {
+        scanf("%s%d", data[i].name, &data[i].tall);
+        data[i].id = i;
+    }
+    
+    qsort(data, N, sizeof(man), cmp);
+    
+    int n = 0;
+    int N_cp = N;
+    
+
+    while (n < N)
+    {
+        //一共K排，每排pai个人
+        int pai;
+        if (N_cp % K == 0) pai = N_cp / K;
+        else    pai = N_cp / K + 1;  
+        //printf("pai = %d\n", pai);  
+
+        //分配一个字符串的动态数组
+        char **name = (char**) malloc(pai * sizeof(char*));
+        //for (int j = 0; j < pai; j++)
+          //  name[j] = (char*) malloc(20 * sizeof(char));
+
+        /* 应该从中间向两边排 */
+        
+        int cnt = 0;    //该排人数计数器
+        int top = pai / 2;  //先确定最高的站中间
+        name[top] = data[n++].name;
+        cnt += 1;
+
+        int i = 1;
+        while (cnt < pai)
+        {
+            name[top - i] = data[n++].name;
+            cnt++;
+            if (cnt < pai) name[top + i] = data[n++].name;
+            else break;
+            cnt++;
+            i++;
+        }
+        
+        //输出各个人的名字
+        for (int j = 0; j < pai; j++)
+        {
+            if (j != pai - 1)   printf("%s ", name[j]);
+            else    printf("%s\n", name[j]);
+        }
+
+        //释放内存
+        //for (int j = 0; j < pai; j++)
+          //  free(name[j]);
+        free(name);
+
+        N_cp -= pai;
+        K--;
+    }
+
+    free(data);
+    return 0;
+}
+```
+
 ## 总结
+
+**易错点：**
+
+1、字符串数组分配空间时要注意，如果用一个字符串给其数组元素赋值，此时是不需要给这个字符指针分配内存空间的。因为其实赋值后这个内存空间分配是无效的，字符指针指向的就是字符串的内存空间，不需要再分配了；后面如果要free的话会导致释放没有分配的空间导致```bad free```错误
