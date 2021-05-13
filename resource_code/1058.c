@@ -6,6 +6,7 @@
 #include <string.h>
 
 typedef struct problem_ans{
+    int id;
     int score;
     int choose_num;
     int correct_ans;
@@ -18,6 +19,14 @@ typedef struct stu_ans{
     char ans[6];
     int score;
 }stu_ans;
+
+int cmp(const void *A, const void *B) {
+    problem_ans a = *(problem_ans*)A;
+    problem_ans b = *(problem_ans*)B;
+    if (a.wrong == b.wrong)
+        return a.id - b.id;
+    return b.wrong - a.wrong;
+}
 
 int main() {
     int N, M;
@@ -33,6 +42,7 @@ int main() {
         for (; j < problem[i].correct_ans; j++)
             scanf(" %c", &problem[i].ans[j]); 
         problem[i].wrong = 0;
+        problem[i].id = i + 1;
     }
     
     stu_ans *stu = (stu_ans*) malloc(M * sizeof(stu_ans));
@@ -72,7 +82,16 @@ int main() {
     
     qsort(problem, M, sizeof(problem_ans), cmp);
     if (problem[0].wrong == 0)  printf("Too simple\n");
-
+    else {
+        printf("%d", problem[0].wrong);
+        int i = 0;
+        while (problem[i].wrong == problem[0].wrong)
+        {
+            printf(" %d", problem[i].id);
+            i++;
+        }
+        printf("\n");
+    }
 
     
     free(problem);
