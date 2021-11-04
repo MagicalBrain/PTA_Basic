@@ -1,0 +1,13 @@
+# ignore .out
+*.out
+
+*.dsYM
+
+# ignore shell script files
+*.sh
+
+# ignore vs build files
+.vs/
+Debug/
+debug/
+x64/
