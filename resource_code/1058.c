@@ -40,14 +40,17 @@ int main() {
         
         int j = 0;
         for (; j < problem[i].correct_ans; j++)
-            scanf(" %c", &problem[i].ans[j]); 
+            scanf(" %c", &problem[i].ans[j]);
+        
         problem[i].wrong = 0;
         problem[i].id = i + 1;
     }
+
     
     stu_ans *stu = (stu_ans*) malloc(M * sizeof(stu_ans));
     for (int k = 0; k < N; k++)
     {
+        getchar();
         int sum_score = 0;
         for (int i = 0; i < M; i++)
         {
@@ -59,7 +62,11 @@ int main() {
                 scanf(" %c", &stu[i].ans[j]); 
                 //if (stu[i].ans[j] != problem[i].ans[j])
             }
-            scanf(")");
+            if (i < M - 1)
+                scanf(") ");
+            else
+                scanf(")");
+            
             stu[i].score = 0;
 
             if (stu[i].ans_num == problem[i].correct_ans) {
