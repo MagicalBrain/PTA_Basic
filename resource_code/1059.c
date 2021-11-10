@@ -63,7 +63,7 @@ int main() {
                     else if (rewards[j] == 1)
                         printf("%d:Minion\n", ids[j]); 
                     else
-                        printf("%4.d:Chocolate\n", ids[j]); 
+                        printf("%04d:Chocolate\n", ids[j]); 
                     check[j] = 1;
                     checked++;
                 }
