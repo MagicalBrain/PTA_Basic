@@ -59,22 +59,27 @@ int main() {
             if (ids[j] == id) {
                 if (check[j] == 0) {
                     if (rewards[j] == 0)
-                        printf("%d:Mystery Award\n", ids[j]); 
+                        printf("%04d:Mystery Award\n", ids[j]); 
                     else if (rewards[j] == 1)
-                        printf("%d:Minion\n", ids[j]); 
+                        printf("%04d:Minion\n", ids[j]); 
                     else
                         printf("%04d:Chocolate\n", ids[j]); 
                     check[j] = 1;
                     checked++;
                 }
-                else
-                    printf("%d:Checked\n", id);        
+                else {
+                    printf("%04d:Checked\n", id);
+                    checked++;
+                }
             }
         }
-        if (checked == 0 && i != k - 1)
-            printf("%d:Are you kidding?\n", id);
-        else if (checked == 0 )
-            printf("%d:Are you kidding?", id);
+        if (checked == 0) {
+            if (i == k - 1)
+                printf("%04d:Are you kidding?", id);
+            else
+                printf("%04d:Are you kidding?\n", id);
+        }
+        
     }
 
     free(ids);
