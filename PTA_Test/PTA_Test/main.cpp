@@ -1,19 +1,22 @@
 /*
-* 1059é¢˜ ä»£ç å­˜æ¡£
+* 1058Ìâ ´úÂë´æµµ
 */
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 #include <string.h>
 
-// éœ€è¦ä¸€ä¸ªåˆ¤æ–­æ˜¯å¦æ˜¯ç´ æ•°çš„å‡½æ•°
+#define _CRT_SECURE_NO_DEPRECATE
+#pragma warning(disable:4996)
+
+// ĞèÒªÒ»¸öÅĞ¶ÏÊÇ·ñÊÇËØÊıµÄº¯Êı
 int Is_premier(int num) {
     if (num < 2)
         return 0;
     if (num == 2)
         return 1;
-    
+
     int tmp = 1;
-    while (tmp * tmp < num) 
+    while (tmp * tmp < num)
         tmp++;
 
     for (int i = 2; i <= tmp; i++)
@@ -21,20 +24,20 @@ int Is_premier(int num) {
         if (num % i == 0)
             return 0;
     }
-    
+
     return 1;
 }
 
 int main() {
-    int n;  // IDçš„ä¸ªæ•°
-    int k;  // éœ€è¦æŸ¥è¯¢IDçš„ä¸ªæ•°
+    int n;  // IDµÄ¸öÊı
+    int k;  // ĞèÒª²éÑ¯IDµÄ¸öÊı
 
-    int *ids;   // ç”¨äºå­˜æ”¾IDçš„æ•°ç»„
-    int *rewards; // ç”¨äºå­˜æ”¾æ’åçš„æ•°ç»„
-    
+    int* ids;   // ÓÃÓÚ´æ·ÅIDµÄÊı×é
+    int* rewards; // ÓÃÓÚ´æ·ÅÅÅÃûµÄÊı×é
+
     scanf("%d", &n);
-    ids = (int*) malloc (n * sizeof(int));
-    rewards = (int*) malloc (n * sizeof(int));
+    ids = (int*)malloc(n * sizeof(int));
+    rewards = (int*)malloc(n * sizeof(int));
     for (int i = 0; i < n; i++) {
         scanf("%d", &ids[i]);
 
@@ -47,10 +50,10 @@ int main() {
     }
 
     scanf("%d", &k);
-    int *check;
-    check = (int*) malloc (k * sizeof(int));
+    int* check;
+    check = (int*)malloc(k * sizeof(int));
     memset(check, 0, n * sizeof(int));
-    for (int i = 0;i < k;i++)
+    for (int i = 0; i < k; i++)
     {
         int id;
         int finded = 0;
@@ -60,11 +63,11 @@ int main() {
             if (ids[j] == id) {
                 if (check[j] == 0) {
                     if (rewards[j] == 0)
-                        printf("%04d: Mystery Award\n", ids[j]); 
+                        printf("%04d: Mystery Award\n", ids[j]);
                     else if (rewards[j] == 1)
-                        printf("%04d: Minion\n", ids[j]); 
+                        printf("%04d: Minion\n", ids[j]);
                     else
-                        printf("%04d: Chocolate\n", ids[j]); 
+                        printf("%04d: Chocolate\n", ids[j]);
                     check[j] = 1;
                     finded++;
                 }
@@ -80,7 +83,7 @@ int main() {
             else
                 printf("%04d: Are you kidding?\n", id);
         }
-        
+
     }
 
     free(ids);
