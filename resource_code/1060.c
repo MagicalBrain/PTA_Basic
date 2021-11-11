@@ -27,29 +27,19 @@ int main() {
         }
     }
 
-    nums = (int*) malloc (len * sizeof(int));
-    memset(nums, 0, len * sizeof(int));
+    //nums = (int*) malloc (len * sizeof(int));
+    //memset(nums, 0, len * sizeof(int));
+    int cnt;
     for(int i = 0; i < n; i++) { 
-        nums[days[i] - 1]++;
-    }
+        //nums[days[i] - 1]++;
+        cnt = 0;
+        for (int j = 0; j < n; j++)
+            if (days[j] > i + 1)
+                cnt++;
 
-    for(int i = 0; i < len; i++) { 
-        //printf("%d ", nums[i]);
-        if (nums[i] == 0)
-            continue;
-        int sum = 0;
-        int t = len - 1;
-        //printf("%d %d\n", t, i);
-        //printf("%d %d\n", nums[t], nums[i]);
-        while (t > i) {
-            sum += nums[t];
-            //printf("%d\n", sum);
-            t--;
-        }
-        if (sum > max && sum == i + 1)
-            max = sum;
+        if (cnt == i + 1 && i + 1 > max)
+            max = i + 1;
     }
-    //printf("\n");
 
     printf("%d", max);
     return 0;
