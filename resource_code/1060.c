@@ -12,7 +12,7 @@ int main() {
     int *days;  // 存储每日骑车的里程
     int max = 0;    // 最大值
     int len;
-    int *nums;
+    int *nums, *total;
 
     scanf("%d", &n);
 
@@ -27,18 +27,23 @@ int main() {
         }
     }
 
-    //nums = (int*) malloc (len * sizeof(int));
-    //memset(nums, 0, len * sizeof(int));
-    int cnt;
+    nums = (int*) malloc (len * sizeof(int));
+    memset(nums, 0, len * sizeof(int));
     for(int i = 0; i < n; i++) { 
-        //nums[days[i] - 1]++;
-        cnt = 0;
-        for (int j = 0; j < n; j++)
-            if (days[j] > i + 1)
-                cnt++;
+        nums[days[i] - 1]++;
+    }
 
-        if (cnt == i + 1 && i + 1 > max)
+    total = (int*) malloc (len * sizeof(int));
+    memset(total, 0, len * sizeof(int));
+    int sum = 0;
+    for(int i = n - 1; i >= 0; i--) { 
+        total[i] = sum;
+        printf("%d\n", total[i]);
+        if (total[i] == i + 1) {
             max = i + 1;
+            break;
+        }
+        sum += nums[i];
     }
 
     printf("%d", max);
