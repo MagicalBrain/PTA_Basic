@@ -41,14 +41,126 @@ $\therefore n1$ 就不是爱丁顿数
 
 ### 测试数据
 
-```bash
-10
-7 7 6 9 3 10 8 2 7 8
-```
+换一下数据试试
 
 ```bash
 10
 7 7 6 9 3 10 8 2 7 8
+# 输出 0
+```
+
+思考一下边界条件
+
+```bash
+1
+0
+# 输出 0
+```
+
+```bash
+6
+7 7 7 7 7 7
+# 输出 6
+```
+
+```bash
+3
+1 2 3
+# 输出 0
+```
+
+```bash
+3
+2 3 4
+# 输出 2
+```
+
+
+### 柳婼的代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int a[1000000];
+bool cmp1(int a, int b) {
+    return a > b;
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    for(int i = 1; i <= n; i++) scanf("%d", &a[i]);
+    sort(a+1, a+n+1, cmp1);
+    int ans = 0, p = 1;
+    while(ans <= n && a[p] > p) {
+        ans++;
+        p++;
+    }
+    printf("%d", ans);
+    return 0;
+}
+```
+
+### 我自己的代码
+
+```cpp
+/*
+* 1060题 代码存档
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    int n;      // 输入天数
+    int *days;  // 存储每日骑车的里程
+    int max = 0;    // 最大值
+    int len;
+    int *nums, *total;
+
+    scanf("%d", &n);
+
+    days = (int*) malloc (n * sizeof(int));
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &days[i]);
+        if (i == 0)
+            len = days[i];
+        else {
+            if (days[i] > len)
+                len = days[i];
+        }
+    }
+
+    if (len != 0) {
+        nums = (int*) malloc (len * sizeof(int));
+        memset(nums, 0, len * sizeof(int));
+        for(int i = 0; i < n; i++) {
+            if (days[i] == 0)
+                continue;
+            nums[days[i] - 1]++;
+        }
+
+        total = (int*) malloc (len * sizeof(int));
+        memset(total, 0, len * sizeof(int));
+        int sum = 0;
+        for(int i = len - 1; i >= 0; i--) { 
+            total[i] = sum;
+            //printf("%d %d\n", i + 1, total[i]);
+            if (total[i] >= i + 1) {
+                max = i + 1;
+                break;
+            }
+            sum += nums[i];
+        }
+    }
+    
+    printf("%d", max);
+    return 0;
+}
 ```
 
 ## 总结
+
+这个题不难，难在读题啊
+
+最大 => ```>=```
